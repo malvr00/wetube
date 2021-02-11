@@ -2,7 +2,7 @@ export const home = (req, res) => res.render("home", { pageTitle: "Home" });
 
 export const search = (req, res) => {
     const {query: {term: searchingBy}} = req;
-    res.render("search", { pageTitle: "Search", searchingBy });
+    res.render("search", { pageTitle: "Searchs", searchingBy });
 };
 
 export const videos = (req, res) =>
@@ -19,4 +19,3 @@ export const editVideo = (req, res) =>
 
 export const deleteVideo = (req, res) =>
   res.render("deleteVideo", { pageTitle: "DeleteVideo" });
-
