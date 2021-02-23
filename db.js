@@ -10,6 +10,7 @@ mongoose.connect(process.env.MONGO_URL,
  }
 );
 
+mongoose.set('useCreateIndex', true);
 
 const db = mongoose.connection;
 

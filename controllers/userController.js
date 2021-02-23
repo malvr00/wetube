@@ -1,10 +1,11 @@
 import routes from "../routes";
+import User from "../models/user";
 
 export const getJoin = (req, res) => {
   res.render("join", { pageTitle: "Join" });
 };
 
-export const postJoin = (req, res) => {
+export const postJoin = async (req, res) => {
   const {
     body: { name, email, password, password2 },
   } = req;
@@ -12,7 +13,16 @@ export const postJoin = (req, res) => {
     res.status(400);
     res.render("join", { pageTitle: "Join" });
   } else {
-    // To Do: Register User
+    try{
+      const user = await User ({
+        name,
+        email
+      });
+      //만든계정과 비밀번호 등록
+      await User.register(user, password); // 주어진 암호로 새 사용자 인스턴스를 등록하는 편리한 방법입니다.
+    }catch (error) {
+      console.log(error);
+    }
     //To Do: Log user in
     res.redirect(routes.home);
   }
