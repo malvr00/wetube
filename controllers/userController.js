@@ -1,3 +1,4 @@
+import passport from "passport"
 import routes from "../routes";
 import User from "../models/user";
 
@@ -5,7 +6,7 @@ export const getJoin = (req, res) => {
   res.render("join", { pageTitle: "Join" });
 };
 
-export const postJoin = async (req, res) => {
+export const postJoin = async (req, res, next) => {
   const {
     body: { name, email, password, password2 },
   } = req;
@@ -20,11 +21,12 @@ export const postJoin = async (req, res) => {
       });
       //만든계정과 비밀번호 등록
       await User.register(user, password); // 주어진 암호로 새 사용자 인스턴스를 등록하는 편리한 방법입니다.
+      next();
     }catch (error) {
       console.log(error);
+      res.redirect(routes.home);
     }
     //To Do: Log user in
-    res.redirect(routes.home);
   }
 };
 
@@ -32,10 +34,11 @@ export const getlogin = (req, res) => {
     res.render("login", { pageTitle: "Login" });
 };
 
-export const postlogin = (req, res) =>{
-    res.redirect(routes.home);
-};
-
+export const postlogin = passport.authenticate("local",{
+  failureRedirect: routes.login,
+  successRedirect: routes.home
+})  // local은 우리가 설치해준 Strategy 이름, failure는 로그인 실패하면 가는곳, success 성공하면
+  
 
 export const logout = (req, res) =>{
   // To Do: Process Log Out
