@@ -8,10 +8,10 @@ const SEARCH = "/search";
 // Users
 
 const USERS = "/users";
-const USER_DETAIL = "/:id";
+const USER_DETAIL = "/:id";          // 다른사람 계정확인 용도
 const EDIT_PROFILE = "/edit-profile";
 const CHNAGE_PASSWORD = "/change-password";
-
+const ME = "/me";
 // Videos
 
 const VIDEOS = "/videos";
@@ -20,6 +20,10 @@ const VIDEO_DETAIL = "/:id";
 const EDIT_VIDEO = "/:id/edit";
 const DELETE_VIDEO = "/:id/delete";
 
+// Github
+
+const GITHUB = "/auth/github";
+const GITHUB_CALLBACK= "/auth/github/callback";
 
 const routes = {
     home: HOME,
@@ -59,7 +63,10 @@ const routes = {
         }else{
             return DELETE_VIDEO;
         }
-    }
+    },
+    gitHub:GITHUB,
+    gitHubCallback:GITHUB_CALLBACK,
+    me:ME
 };
 
 export default routes;

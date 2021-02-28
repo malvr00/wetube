@@ -5,7 +5,7 @@ const multerVideo = multer({ dest: "uploads/videos/" });
 
 export const localsmiddleware = (req, res, next) => {
   res.locals.routes = routes;
-  res.locals.user = req.user;
+  res.locals.loggedUser = req.user;
   next();
 };
 

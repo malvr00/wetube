@@ -38,17 +38,59 @@ export const postlogin = passport.authenticate("local",{
   failureRedirect: routes.login,
   successRedirect: routes.home
 })  // local은 우리가 설치해준 Strategy 이름, failure는 로그인 실패하면 가는곳, success 성공하면
-  
+
+//github 유저 로그인 시키기
+export const githubLogin = passport.authenticate("github");
+
+//github 로그인 하면 콜백으로 유저 정보 가지고옴
+export const githubLoginCallback = async (accessToken, refreshToken, profile, cb) =>{
+  const { _json:{id,avatar_url, name, email}} = profile;
+  // 유저정보 가져오는데 성공시
+  try{
+    const user = await User.findOne({email:email});
+    if(user){
+      user.githubId = id; // github ID
+      user.save();
+      return cb(null, user);
+    }
+    const newUser = await User.create({
+      email,
+      name,
+      githubId: id,
+      avatarUrl: avatar_url
+    });
+    return cb(null,newUser);
+  }catch(error){
+    return cb(error)
+  }
+}
+export const postGithubLogIn = (req, res) =>{
+  res.redirect(routes.home);
+}
 
 export const logout = (req, res) =>{
-  // To Do: Process Log Out
+  req.logout();
   res.redirect(routes.home)
 }
 
 
 //export const users = (req, res) => res.render("users", { pageTitle: "Users" });
-export const userDetail = (req, res) =>
-  res.render("userDetail", { pageTitle: "UserDetail" });
+
+export const me = (req, res) => {
+  res.render("userDetail", { pageTitle: "UserDetail",user:req.user } );
+}
+
+export const userDetail = async (req, res) =>{
+  const {params:{id}} = req;
+  try{
+    //console.log(id);                        // findById가 필터링해주므로 존재하는 ID만 사이트로 이동 가능.
+    const user = await User.findById(id);     // findbyId찾을때 등록하지 않은 id이면 error 발생하여 catch가 대신 처리
+    res.render("userDetail", { pageTitle: "UserDetail",user });
+  } catch(error){
+    // console.log("하하하하");
+    res.redirect(routes.home);
+  }
+}
   
 export const editProfile = (req, res) =>
   res.render("editProfile", { pageTitle: "EditProfile" });

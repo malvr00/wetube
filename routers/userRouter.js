@@ -1,5 +1,5 @@
 import express from "express";
-import {userDetail, editProfile, changePassword } from "../controllers/userController";
+import {editProfile, changePassword, userDetail } from "../controllers/userController";
 import { onlyPrivate } from "../localsmiddleware";
 import routes from "../routes";
 

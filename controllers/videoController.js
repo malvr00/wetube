@@ -65,7 +65,7 @@ export const geteditVideo = async (req, res) => {
     params: { id },
   } = req;
   try {
-    const Video = await video.findById(id);
+    const Video = await video.findById(id); // 이 함수 이용하여 존재하지 않는 ID 적을 시 error 발생하여 catch 로 넘어감
     res.render("editVideo", { pageTitle: `Edit ${Video.title}`, Video });
   } catch (error) {
     res.redirect(routes.home);
