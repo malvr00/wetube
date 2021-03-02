@@ -41,18 +41,21 @@ export const postupload = async (req, res) => {
     fileUrl: path,
     title,
     description,
+    creator: req.user.id
   });
-  console.log(newVideo);
-  // To Do: Upload and save Video
+  req.user.videos.push(newVideo.id);
+  req.user.save();
+  //console.log(newVideo);
   res.redirect(routes.videoDetail(newVideo.id));
 };
 
 export const videoDetail = async (req, res) => {
   const {
-    params: { id },
+    params: { id }
   } = req;
   try {
-    const Video = await video.findById(id);
+    const Video = await video.findById(id).populate("creator"); 
+    console.log(Video);   //populate 객체를 대려오는 함수 object ID type만 쓸 수 있음
     res.render("videoDetail", { pageTitle: Video.title, Video });
   } catch (error) {
     console.log(error);
