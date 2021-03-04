@@ -41,7 +41,7 @@ export const postupload = async (req, res) => {
     fileUrl: path,
     title,
     description,
-    creator: req.user.id
+    creator: req.user.id,
   });
   req.user.videos.push(newVideo.id);
   req.user.save();
@@ -51,11 +51,11 @@ export const postupload = async (req, res) => {
 
 export const videoDetail = async (req, res) => {
   const {
-    params: { id }
+    params: { id },
   } = req;
   try {
-    const Video = await video.findById(id).populate("creator"); 
-    console.log(Video);   //populate 객체를 대려오는 함수 object ID type만 쓸 수 있음
+    const Video = await video.findById(id).populate("creator");
+    console.log(Video); //populate 객체를 대려오는 함수 object ID type만 쓸 수 있음
     res.render("videoDetail", { pageTitle: Video.title, Video });
   } catch (error) {
     console.log(error);
@@ -69,7 +69,11 @@ export const geteditVideo = async (req, res) => {
   } = req;
   try {
     const Video = await video.findById(id); // 이 함수 이용하여 존재하지 않는 ID 적을 시 error 발생하여 catch 로 넘어감
-    res.render("editVideo", { pageTitle: `Edit ${Video.title}`, Video });
+    if (Video.creator != req.user.id) {
+      throw Error();
+    } else {
+      res.render("editVideo", { pageTitle: `Edit ${Video.title}`, Video });
+    }
   } catch (error) {
     res.redirect(routes.home);
   }
@@ -94,7 +98,16 @@ export const deleteVideo = async (req, res) => {
   } = req;
 
   try {
-    await video.findOneAndRemove({ _id: id });
+    try {
+      const Video = await video.findById(id); // 이 함수 이용하여 존재하지 않는 ID 적을 시 error 발생하여 catch 로 넘어감
+      if (Video.creator != req.user.id) {
+        throw Error();
+      } else {
+        await video.findOneAndRemove({ _id: id });
+      }
+    } catch (error) {
+      res.redirect(routes.home);
+    }
   } catch (error) {}
   res.redirect(routes.home);
 };

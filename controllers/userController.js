@@ -92,7 +92,8 @@ export const userDetail = async (req, res) => {
   } = req;
   try {
     //console.log(id);                        // findById가 필터링해주므로 존재하는 ID만 사이트로 이동 가능.
-    const user = await User.findById(id); // findbyId찾을때 등록하지 않은 id이면 error 발생하여 catch가 대신 처리
+    const user = await User.findById(id).populate("videos") // findbyId찾을때 등록하지 않은 id이면 error 발생하여 catch가 대신 처리
+    console.log(user);
     res.render("userDetail", { pageTitle: "UserDetail", user });
   } catch (error) {
     // console.log("하하하하");

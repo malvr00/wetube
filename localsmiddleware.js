@@ -6,7 +6,7 @@ const multerAvatar = multer({dest: "uploads/avatars/"});
 
 export const localsmiddleware = (req, res, next) => {
   res.locals.routes = routes;
-  res.locals.loggedUser = req.user;
+  res.locals.loggedUser = req.user || null;
   next();
 };
 
