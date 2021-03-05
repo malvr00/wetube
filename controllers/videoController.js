@@ -55,7 +55,7 @@ export const videoDetail = async (req, res) => {
   } = req;
   try {
     const Video = await video.findById(id).populate("creator");
-    console.log(Video); //populate 객체를 대려오는 함수 object ID type만 쓸 수 있음
+  //  console.log(Video); //populate 객체를 대려오는 함수 object ID type만 쓸 수 있음
     res.render("videoDetail", { pageTitle: Video.title, Video });
   } catch (error) {
     console.log(error);
