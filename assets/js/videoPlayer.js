@@ -6,6 +6,13 @@ const fullScreen = document.getElementById("jsFullScreen");
 const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
 const volumeRange = document.getElementById("jsValume");
+
+const registerView = () =>{
+  const videoId = window.location.href.split("/videos/")[1];
+  fetch(`/api/${videoId}/view`,{
+    method:"POST" // database 변갱해야 해서 post 사용.
+  }); // fetch에서 작동. 이유:getRequest가지고 있어서.
+}
 //video mdn elements 사이트 보기 -> htmlMediaelement
 
 //Play Button
@@ -68,7 +75,7 @@ function goFullScreen() {
 //동영상 재생 시간 구하기
 const formatDate = (seconds) => {
   const secondsNumber = parseInt(seconds, 10);
-  console.log(secondsNumber);
+  //console.log(secondsNumber);
   let hours = Math.floor(secondsNumber / 3600);
   let minutes = Math.floor((secondsNumber - hours * 3600) / 60);
   let totalSeconds = secondsNumber - hours * 3600 - minutes * 60;
@@ -102,6 +109,7 @@ function setTotalTime() {
 
 //video 종료시 처음 화면으로
 function handleEnded() {
+  registerView();
   videoPlayer.currentTime = 0;
   playBtn.innerHTML = '<i class="fas fa-pause"></i>';
 }

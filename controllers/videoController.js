@@ -1,5 +1,6 @@
 import routes from "../routes";
 import video from "../models/video";
+import Comment from "../models/comment";
 
 export const home = async (req, res) => {
   try {
@@ -54,8 +55,11 @@ export const videoDetail = async (req, res) => {
     params: { id },
   } = req;
   try {
-    const Video = await video.findById(id).populate("creator");
-  //  console.log(Video); //populate 객체를 대려오는 함수 object ID type만 쓸 수 있음
+    const Video = await video
+      .findById(id)
+      .populate("creator")
+      .populate("comments");
+    //  console.log(Video); //populate 객체를 대려오는 함수 object ID type만 쓸 수 있음
     res.render("videoDetail", { pageTitle: Video.title, Video });
   } catch (error) {
     console.log(error);
@@ -110,4 +114,44 @@ export const deleteVideo = async (req, res) => {
     }
   } catch (error) {}
   res.redirect(routes.home);
+};
+
+//API View Server(database)와 소통
+export const postRegisterView = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  try {
+    const Video = await video.findById(id);
+    Video.views += 1;
+    Video.save();
+    res.status(200); // 200 == OK
+  } catch (error) {
+    res.status(400);
+    res.end();
+  } finally {
+    res.end(); // 요청 끝냄.
+  }
+};
+
+//API comment
+export const postAddComment = async (req, res) => {
+  const {
+    params: { id },
+    body: { comment },
+    user,
+  } = req;
+  try {
+    const Video = await video.findById(id);
+    const newComment = await Comment.create({
+      text: comment,
+      creator: user.id,
+    });
+    Video.comments.push(newComment.id);
+    Video.save();
+  } catch (error) {
+    res.status(400);
+  } finally {
+    res.end();
+  }
 };

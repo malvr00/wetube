@@ -5,12 +5,12 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import passport from "passport";
-import mongoose from "mongoose";
 import session from "express-session";
 const MongoStore = require("connect-mongo").default;
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
+import apiRouter from "./routers/apiRouter";
 import routes from "./routes";
 import { localsmiddleware } from "./localsmiddleware";
 import "./passport";
@@ -50,7 +50,7 @@ app.use(localsmiddleware);
 app.use(routes.home, globalRouter);
 app.use(routes.users, userRouter);
 app.use(routes.videos, videoRouter);
-
+app.use(routes.api, apiRouter);
 //app.use("/user", userRouter);
 
 export default app;
