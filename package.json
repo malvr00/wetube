@@ -6,6 +6,7 @@
   "author": "yong",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.13.10",
     "@babel/core": "^7.12.13",
     "@babel/node": "^7.12.13",
     "@babel/polyfill": "^7.12.1",
@@ -42,7 +43,7 @@
     "dev:server": "nodemon --exec babel-node init.js --delay 2 --ignore '.scss' --ignore 'static' ",
     "dev:assets": "cross-env WEBPACK_ENV=development webpack",
     "build:assets": "cross-env WEBPACK_ENV=product webpack",
-    "prestart":"npm rub build"
+    "prestart": "npm rub build"
   },
   "devDependencies": {
     "eslint": "^7.20.0",
