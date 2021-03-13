@@ -41,7 +41,8 @@
   "scripts": {
     "dev:server": "nodemon --exec babel-node init.js --delay 2 --ignore '.scss' --ignore 'static' ",
     "dev:assets": "cross-env WEBPACK_ENV=development webpack",
-    "build:assets": "cross-env WEBPACK_ENV=product webpack"
+    "build:assets": "cross-env WEBPACK_ENV=product webpack",
+    "prestart":"npm rub build"
   },
   "devDependencies": {
     "eslint": "^7.20.0",
