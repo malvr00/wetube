@@ -1,6 +1,21 @@
 import axios from "axios";
 const addCommentForm = document.getElementById("jsAddComment");
+const commentList = document.getElementById("jsCommentList");
+const commentNumber = document.getElementById("jsCommentNumber");
 
+//실시간 댓글수 변경
+const increaseNumber = () => {
+  commentNumber.innerHTML = parseInt(commentNumber.innerHTML, 10) + 1;
+}
+//실시간인것 처럼 페이크
+const addComment = (comment) => {
+  const li = document.createElement("li");
+  const span = document.createElement("span");
+  span.innerHTML = comment;
+  li.appendChild(sapn);
+  commentList.prepend(li) // prepend 객체를 앞에 추가., append 뒤에 추가. (댓글)
+  increaseNumber();
+}
 const sendComment = async (comment) => {
     const videoId = window.location.href.split("/videos/")[1];
     const response = await axios({
@@ -10,6 +25,9 @@ const sendComment = async (comment) => {
             comment
         }
     });
+    if(response.status === 200){
+      addComment(comment);
+    }
 };
 
 const handleSubmit = (event) => {
