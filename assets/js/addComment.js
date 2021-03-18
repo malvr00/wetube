@@ -12,7 +12,7 @@ const addComment = (comment) => {
   const li = document.createElement("li");
   const span = document.createElement("span");
   span.innerHTML = comment;
-  li.appendChild(sapn);
+  li.appendChild(span);
   commentList.prepend(li) // prepend 객체를 앞에 추가., append 뒤에 추가. (댓글)
   increaseNumber();
 }
