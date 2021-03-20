@@ -28,7 +28,6 @@ app.use(function (req, res, next) {
   );
   return next();
 });
-app.use("/uploads", express.static("uploads"));
 app.use("/static", express.static(path.join(__dirname,"static")));
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -44,7 +43,7 @@ app.use(
 );
 //passport가 스스로 쿠키를 찾아 쿠키에 해당하는 사용자 찾음
 app.use(passport.initialize()); // passport 초기화
-app.use(passport.session()); // 자기가 찾은 사용자를 요청(req)로 만들어줌
+app.use(passport.session()); // 자기가 찾은 사용자를 요청(req)로 만들어줌  
 
 app.use(localsmiddleware);
 
