@@ -12,6 +12,7 @@
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.12.13",
     "autoprefixer": "^10.2.4",
+    "aws-sdk": "^2.868.0",
     "axios": "^0.21.1",
     "babel-loader": "^8.2.2",
     "body-parser": "^1.19.0",
@@ -31,6 +32,7 @@
     "mongoose": "^5.11.16",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
     "node-sass": "^5.0.0",
     "nodemon": "^2.0.7",
     "passport": "^0.4.1",
@@ -55,7 +57,7 @@
     "prebuild": "rm -rf build",
     "tunnel": "lt --port 4000",
     "start": "PRODUCTION=true node build/init.js",
-    "prestart":"npm run build"
+    "prestart": "npm run build"
   },
   "devDependencies": {
     "eslint": "^7.20.0",

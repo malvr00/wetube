@@ -113,7 +113,7 @@ export const postEditProfile = async (req, res) => {
       await User.findByIdAndUpdate(req.user.id, {
       name,
       email,
-      avatarUrl: file ? file.path : req.user.avatarUrl   // Update 함수로 userDB 수정하기 때문에 넣지 않으면 NULL값으로 들어가짐.
+      avatarUrl: file ? file.location : req.user.avatarUrl   // Update 함수로 userDB 수정하기 때문에 넣지 않으면 NULL값으로 들어가짐.
     });                                                  // 기존 avatarUrl은 당연히 새로 Update 하기 때문에 다시 넣어 줘야함. 
     res.redirect(routes.me);
   } catch (error) {
