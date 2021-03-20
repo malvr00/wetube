@@ -8,9 +8,9 @@ import "./models/video";
 import "./models/comment";
 import "./models/user";
 
-const PORT = process.env.PRODUCTION ? `http://localhost:${process.env.PORT}` : `https://rocky-chamber-06274.herokuapp.com/`;
+const PORT = process.env.PORT;
 
 const handleListening = () =>
-  console.log(`✔ Listening on: ${PORT}`);
+  console.log(`✔ Listening on: http://localhost:${PORT}`);
 
 app.listen(PORT, handleListening);

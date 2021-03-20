@@ -14,7 +14,7 @@ passport.use(
     {
       clientID: process.env.GH_ID,
       clientSecret: process.env.GIT_SECRET,
-      callbackURL: `http://localhost:4000${routes.gitHubCallback}`,
+      callbackURL: process.env.PROUCTION ?  `https://desolate-dusk-48463.herokuapp.com${routes.gitHubCallback}`:`http://localhost:4000${routes.gitHubCallback}`,
     },
     githubLoginCallback
   )
