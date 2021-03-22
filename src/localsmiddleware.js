@@ -31,7 +31,6 @@ export const localsmiddleware = (req, res, next) => {
   res.locals.loggedUser = req.user || null;
   next();
 };
-
 export const onlyPublic = (req, res, next) => {
   if (req.user) {
     res.redirect(routes.home);
